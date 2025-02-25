@@ -30,11 +30,9 @@ git clone --depth 1 https://code.videolan.org/videolan/x264.git
 ```  
 ```bash
 cd x264
-./configure \
-    --prefix=/opt/x264-arm64 \
-    --enable-static \
-    --disable-shared \
-    --host=aarch64-linux
+./configure --host=aarch64-linux-gnu --cross-prefix=aarch64-linux-gnu- \
+    --prefix=/opt/x264-arm64 --enable-static --disable-asm --disable-opencl
+
 make -j$(nproc)
 sudo make install
 ```  
@@ -97,5 +95,5 @@ Then, SSH into the Raspberry Pi and run:
 
 ## 7. Playing the Video via SSH  
 ```bash
-cvlc --fullscreen output.mp4
+DISPLAY=:0 cvlc --fullscreen output.mp4
 ```  
