@@ -16,24 +16,20 @@ cd ~
 git clone https://github.com/libjpeg-turbo/libjpeg-turbo.git
 cd libjpeg-turbo
 ```
-### 2.2. Tạo tệp Toolchain cho CMake
-Tạo tệp `Toolchain.cmake` trong thư mục `libjpeg-turbo/cmake/` với nội dung sau:
+### 2.2. Các gói phụ thuộc
+Cài các gói phụ thuộc
 ```
-set(CMAKE_SYSTEM_NAME Linux)
-set(CMAKE_SYSTEM_PROCESSOR aarch64)
-set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
-set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)
-set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
-set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+cd 
+sudo apt update
+sudo apt install -y cmake nasm yasm autoconf automake libtool pkg-config
 ```
 ### 2.3. Biên dịch libjpeg-turbo
 
 ```
 mkdir build && cd build
-cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain.cmake -DCMAKE_INSTALL_PREFIX=/home/yourname/libjpeg-turbo-aarch64 ..
+cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ..
 make -j$(nproc)
-make install
+sudo make install
 ```
 Sau khi biên dịch xong, `libjpeg-turbo` sẽ được cài vào thư mục `/home/yourname/libjpeg-turbo-aarch64`.
 
